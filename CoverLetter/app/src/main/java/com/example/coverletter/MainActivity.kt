@@ -7,11 +7,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -37,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color(android.graphics.Color.parseColor("#512BD4"))
                 ) {
-                        CoverLetterImage(name = "Kevin Chan", rol = "Backend Developer")
+                        CoverLetterImage(name = "Kevin Chan", rol = "Backend Developer", email = "kevinchan200145@gmail.com")
                 }
             }
         }
@@ -67,15 +71,38 @@ fun ShowName(name: String, rol: String, modifier: Modifier = Modifier) {
     }
 }
 @Composable
-fun ShowEmail(email: String, modifier: Modifier = Modifier){
+fun ShowEmail(email: String, modifier: Modifier = Modifier) {
     Text(
         text = email,
-        modifier = Modifier.padding(4.dp),
-        textAlign = TextAlign.Left
+        modifier = modifier.padding(4.dp),
+        textAlign = TextAlign.Left,
+        fontSize = 25.sp,
+        color = Color.White
     )
 }
+
 @Composable
-fun CoverLetterImage(name: String, rol: String, modifier: Modifier = Modifier) {
+fun ShowEmailWithIcon(email: String, modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.email),
+            contentDescription = null,
+            modifier = Modifier.size(24.dp)
+        )
+
+        Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
+
+        ShowEmail(email = email, modifier = Modifier.weight(1f))
+    }
+}
+
+@Composable
+fun CoverLetterImage(name: String, rol: String, email: String, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -83,20 +110,28 @@ fun CoverLetterImage(name: String, rol: String, modifier: Modifier = Modifier) {
         val image = painterResource(R.drawable.c_sharp_c_logo_02f17714ba_seeklogo_com)
 
         Column(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(painter = image, contentDescription = null)
+            Spacer(modifier = Modifier.height(8.dp))
             ShowName(
                 name = name,
                 rol = rol,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp, start = 8.dp, end = 8.dp) // Ajusta según sea necesario
+                    .padding(top = 8.dp, start = 8.dp, end = 8.dp)
             )
-            ShowEmail(email = "kevinchan200145@gmail.com")
         }
+    }
+    Box(modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomCenter
+
+    ){
+        ShowEmailWithIcon(email = email, modifier = Modifier.padding(bottom = 64.dp))
     }
 }
 
@@ -104,6 +139,6 @@ fun CoverLetterImage(name: String, rol: String, modifier: Modifier = Modifier) {
 @Composable
 fun CoverLetterPreview() {
     CoverLetterTheme {
-        CoverLetterImage("Kevin Chan", "Backend Developer")
+        CoverLetterImage("Kevin Chan", "Backend Developer", "kevinchan200145@gmail.com")
     }
 }
